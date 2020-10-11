@@ -1,4 +1,5 @@
 /Resources*
+/Models*
 /Resources\word2vec\word2vec-google-news-300
 /Resources/Fake.csv
 /Recources/True.csv
