@@ -1,0 +1,11 @@
+/Resources*
+/Resources\word2vec\word2vec-google-news-300
+/Resources/Fake.csv
+/Recources/True.csv
+/Resources\Fake.csv
+/Recources\True.csv
+/data*
+/data/Fake.csv
+/data/True.csv
+/data\Fake.csv
+/data\True.csv
