@@ -1,5 +1,6 @@
 import os, sys
 import pandas as pd
+import numpy as np
 from IPython.display import Image
 import seaborn as sns
 import matplotlib.pyplot  as plt
@@ -82,10 +83,10 @@ def plot_by_time(df_true, df_false):
 def amount_characters(df):
     fig,(ax1,ax2)=plt.subplots(1,2,figsize=(12,8))
     text_len=df[df['category']==1]['text'].str.len()
-    ax1.hist(text_len,color='red')
+    ax1.hist(text_len,color='green')
     ax1.set_title('Real text')
     text_len=df[df['category']==0]['text'].str.len()
-    ax2.hist(text_len,color='green')
+    ax2.hist(text_len,color='red')
     ax2.set_title('Fake text')
     fig.suptitle('Characters in texts')
     plt.show()
@@ -94,10 +95,10 @@ def amount_characters(df):
 def amount_words(df):
     fig,(ax1,ax2)=plt.subplots(1,2,figsize=(12,8))
     text_len=df[df['category']==1]['text'].str.split().map(lambda x: len(x))
-    ax1.hist(text_len,color='red')
+    ax1.hist(text_len,color='green')
     ax1.set_title('Real text')
     text_len=df[df['category']==0]['text'].str.split().map(lambda x: len(x))
-    ax2.hist(text_len,color='green')
+    ax2.hist(text_len,color='red')
     ax2.set_title('Fake text')
     fig.suptitle('Words in texts')
     plt.show()
@@ -105,10 +106,31 @@ def amount_words(df):
 def compare_word_length(df):
     fig,(ax1,ax2)=plt.subplots(1,2,figsize=(10,5))
     word=df[df['category']==1]['text'].str.split().apply(lambda x : [len(i) for i in x])
-    sns.distplot(word.map(lambda x: np.mean(x)),ax=ax1,color='red')
+    sns.distplot(word.map(lambda x: np.mean(x)),ax=ax1,color='green')
     ax1.set_title('Real text')
     word=df[df['category']==0]['text'].str.split().apply(lambda x : [len(i) for i in x])
-    sns.distplot(word.map(lambda x: np.mean(x)),ax=ax2,color='green')
+    sns.distplot(word.map(lambda x: np.mean(x)),ax=ax2,color='red')
     ax2.set_title('Fake text')
     fig.suptitle('Average word length in each text')
+    plt.show()
+
+
+def show_loss(model):
+    plt.figure(figsize=(7,5))
+    plt.title("Loss over epochs",fontsize=16)
+    plt.plot((model.history.history['loss']),c='k',lw=2)
+    plt.grid(True)
+    plt.xlabel("Epochs",fontsize=14)
+    plt.ylabel("Loss",fontsize=14)
+    plt.xticks(fontsize=14)
+    plt.yticks(fontsize=14)
+    plt.show()
+
+def train_val_accuracy(model):
+    plt.plot(model.history['acc'], label=' (training data)')
+    plt.plot(model.history['val_acc'], label='validation data)')
+    plt.title('Accuracy for Text Classification')
+    plt.ylabel('Accuracy value')
+    plt.xlabel('No. epoch')
+    plt.legend(loc="lower right")
     plt.show()
